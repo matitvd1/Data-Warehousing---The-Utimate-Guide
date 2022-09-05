@@ -1,0 +1,31 @@
+-- Setting up schema & table structure
+CREATE SCHEMA core_layer;
+
+
+CREATE TABLE core_layer.dim_product (
+    Product_PK int, 
+    product_id varchar(5),
+    product_name varchar(100),
+    category varchar(50),
+    subcategory varchar(50),
+    brand varchar(50)
+   );
+   
+-- Looking at the results
+SELECT * FROM "core_layer".dim_product;
+
+INSERT INTO public.products(
+	product_id, product_name, category, subcategory)
+	VALUES ('P0750', 'test', 'testcategory', 'testsubcategory');
+
+-- Run again ETL and it should add the new product ID 'P0760'
+
+select * FROM "public".products
+order by product_id DESC
+LIMIT 10;
+
+DELETE FROM "public".products
+WHERE product_id = 'P0750';
+
+TRUNCATE "core_layer".dim_product RESTART IDENTITY;
+
